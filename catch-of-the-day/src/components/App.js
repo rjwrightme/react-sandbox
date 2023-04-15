@@ -25,12 +25,10 @@ class App extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log(this.state.order);
     localStorage.setItem(
       this.props.match.params.storeId,
       JSON.stringify(this.state.order)
     );
-    console.log("It updated!");
   }
 
   componentWillUnmount() {
@@ -43,6 +41,15 @@ class App extends React.Component {
     // 2. Add our new fish to the fishes variable with a timestamp for a unique value.
     fishes[`fish${Date.now()}`] = fish;
     // 3. Set the updated fishes object as the new state
+    this.setState({ fishes });
+  };
+
+  updateFish = (key, updatedFish) => {
+    // 1. Take a copy of the current state
+    const fishes = { ...this.state.fishes };
+    // 2. Update that copy
+    fishes[key] = updatedFish;
+    // 3. Set updated copy to state
     this.setState({ fishes });
   };
 
@@ -78,7 +85,9 @@ class App extends React.Component {
         <Order fishes={this.state.fishes} order={this.state.order} />
         <Inventory
           addFish={this.addFish}
+          updateFish={this.updateFish}
           loadSampleFishes={this.loadSampleFishes}
+          fishes={this.state.fishes}
         />
       </div>
     );
