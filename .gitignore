@@ -1,2 +1,3 @@
 .DS_Store
 catch-of-the-day/node_modules
+.env
